@@ -18,7 +18,9 @@
 		$price += $list[$name][2];
 		$amount += $list[$name][1];
 	};
+	$list['subtotal'] = array("-", $amount, $price);
 	$list['tax'] = array($tax_rate, "-", $price * $tax_rate);
+	$list['subtotal + tax'] = array("-", "-", $price + $list["tax"][2]);
 	$list['tip'] = array($tip_rate, "-", $price * $tip_rate);
 	$list['total'] = array("-", $amount, $price + $list["tax"][2] + $list["tip"][2]);
 
@@ -28,7 +30,7 @@
 		} else if ("" === trim($value)) {
 			print "<td></td>";
 		} else {
-			print "<td>".$value."</td>";
+			print "<td class='td-float'>".$value."</td>";
 		}
 	}
 ?>
@@ -47,9 +49,9 @@
 		<table>
 		<tr>
 			<th>Name</th>
-			<th>Each</th>
-			<th>Quantity</th>
 			<th>Price</th>
+			<th>Quantity</th>
+			<th>Amount</th>
 		</tr>
 		<?php
 			foreach ($list as $caption => $cells) {
@@ -58,10 +60,12 @@
 					$border = " class='tr-divide'";
 				} else if ("total" == $caption) {
 					$border = " class='tr-total'";
+				} else if ("subtotal" == $caption) {
+					$border = " class='tr-total'";
 				}
 
 				print "<tr".$border.">";
-				print "<td>".ucwords($caption)."</td>";
+				print float_or_space(ucwords($caption));
 				print float_or_space($cells[0]);
 				print "<td>".$cells[1]."</td>";
 				print float_or_space($cells[2]);
