@@ -17,8 +17,9 @@
 <style>
 	table {border-collapse: collapse;}
 	th {background-color: Navy; color: White; font-style: bold; padding: 5px; text-align: center;}
-	tr {background-color: LightGoldenRodYellow;}
-	td {text-align:center; padding: 5px;}
+	tr.odd {background-color: PowderBlue;}
+	tr.even {background-color: LightCyan;}
+	td {border: 1px Solid Gray; text-align:center; padding: 5px;}
 </style>
 <body>
 	<table>
@@ -27,7 +28,7 @@
 			if ($idx == 0) {
 				print "<tr><th>".implode("</th><th>", $line)."</th></tr>";
 			} else {
-				print "<tr><td>".implode("</td><td>", $line)."</td></tr>";
+				print "<tr class='".($idx % 2 == 0 ? "even" : "odd")."'><td>".implode("</td><td>", $line)."</td></tr>";
 			}
 			$idx ++;
 		}
